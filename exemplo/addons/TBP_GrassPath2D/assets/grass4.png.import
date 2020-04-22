@@ -1,0 +1,34 @@
+[remap]
+
+importer="texture"
+type="StreamTexture"
+path="res://.import/grass4.png-8b1179c7ee78a5b12abb18b9fa0a504d.stex"
+metadata={
+"vram_texture": false
+}
+
+[deps]
+
+source_file="res://addons/TBP_GrassPath2D/assets/grass4.png"
+dest_files=[ "res://.import/grass4.png-8b1179c7ee78a5b12abb18b9fa0a504d.stex" ]
+
+[params]
+
+compress/mode=1
+compress/lossy_quality=0.68
+compress/hdr_mode=0
+compress/bptc_ldr=0
+compress/normal_map=0
+flags/repeat=0
+flags/filter=true
+flags/mipmaps=false
+flags/anisotropic=false
+flags/srgb=2
+process/fix_alpha_border=true
+process/premult_alpha=false
+process/HDR_as_SRGB=false
+process/invert_color=false
+stream=false
+size_limit=0
+detect_3d=false
+svg/scale=1.0

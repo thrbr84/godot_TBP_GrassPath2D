@@ -1,0 +1,110 @@
+[gd_scene load_steps=18 format=2]
+
+[ext_resource path="res://addons/TBP_GrassPath2D/TBP_GrassPath2D.gd" type="Script" id=1]
+[ext_resource path="res://addons/TBP_GrassPath2D/assets/grass9.png" type="Texture" id=2]
+[ext_resource path="res://addons/TBP_GrassPath2D/assets/grass0.png" type="Texture" id=4]
+[ext_resource path="res://addons/TBP_GrassPath2D/assets/grass4.png" type="Texture" id=7]
+[ext_resource path="res://addons/TBP_GrassPath2D/assets/grass8.png" type="Texture" id=10]
+[ext_resource path="res://addons/TBP_GrassPath2D/assets/grass10.png" type="Texture" id=11]
+[ext_resource path="res://addons/TBP_GrassPath2D/assets/grass11.png" type="Texture" id=12]
+[ext_resource path="res://addons/TBP_GrassPath2D/assets/grass13.png" type="Texture" id=13]
+[ext_resource path="res://addons/TBP_GrassPath2D/assets/grass14.png" type="Texture" id=15]
+[ext_resource path="res://addons/TBP_GrassPath2D/assets/grass15.png" type="Texture" id=16]
+[ext_resource path="res://addons/TBP_GrassPath2D/assets/grass16.png" type="Texture" id=17]
+[ext_resource path="res://addons/TBP_GrassPath2D/assets/grass17.png" type="Texture" id=18]
+[ext_resource path="res://addons/TBP_GrassPath2D/assets/grass19.png" type="Texture" id=19]
+[ext_resource path="res://addons/TBP_GrassPath2D/assets/grass18.png" type="Texture" id=20]
+
+[sub_resource type="Curve2D" id=1]
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, 0, 670, 0, 0, 0, 0, 1280, 670 )
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "start"
+length = 10.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("TBP_GrassPath2D:heightGrass")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 1.0, 0.0 ]
+}
+
+[sub_resource type="Animation" id=3]
+resource_name = "start"
+length = 50.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("TBP_GrassPath2D:windDirection")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 6, 10, 15, 20, 30 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0.323, 0.323, -0.981, -0.981, 1.0, 1.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("TBP_GrassPath2D:windForce")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 6, 12, 20, 26.1, 37 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0.241, 0.241, 0.719, 0.748, 0.803, 0.296 ]
+}
+
+[node name="ExemploAnimation1" type="Node2D"]
+
+[node name="TBP_GrassPath2DBackground" type="Path2D" parent="."]
+visible = false
+curve = SubResource( 1 )
+script = ExtResource( 1 )
+colorGrass = [  ]
+blur_strength = 0.549
+colorTerrain = Color( 0, 0, 0, 1 )
+interval = 3.0
+interactive = false
+randomGrassMin = -0.945
+randomGrassMax = 1.0
+windForce = 0.803
+windDirection = 1.0
+grassYOffset = 0.0
+maxLeafRotateDegree = 90.0
+grassTextures = [ ExtResource( 4 ) ]
+
+[node name="TBP_GrassPath2D" type="Path2D" parent="."]
+position = Vector2( 0, -64 )
+curve = SubResource( 1 )
+script = ExtResource( 1 )
+colorGrass = [  ]
+blur_strength = 0.081
+colorTerrain = Color( 0, 0, 0, 1 )
+interval = 3.0
+interactive = false
+randomGrassMin = -0.945
+randomGrassMax = 1.0
+windForce = 0.803
+windDirection = 1.0
+grassYOffset = 30.0
+maxLeafRotateDegree = 90.0
+grassTextures = [ ExtResource( 7 ), ExtResource( 10 ), ExtResource( 2 ), ExtResource( 11 ), ExtResource( 12 ), ExtResource( 13 ), ExtResource( 15 ), ExtResource( 16 ), ExtResource( 17 ), ExtResource( 18 ), ExtResource( 20 ), ExtResource( 19 ), ExtResource( 4 ) ]
+
+[node name="heighGrass" type="AnimationPlayer" parent="."]
+anims/start = SubResource( 2 )
+
+[node name="windDirection" type="AnimationPlayer" parent="."]
+autoplay = "start"
+anims/start = SubResource( 3 )
