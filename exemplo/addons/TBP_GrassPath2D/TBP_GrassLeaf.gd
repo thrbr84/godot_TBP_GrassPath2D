@@ -33,6 +33,7 @@ func _setHeightGrass(newHeight):
 	heightGrass = newHeight
 
 	var sprite = $Control/Sprite
+	if sprite==null:return
 	if weakref(sprite).get_ref():
 		var h = sprite.texture.get_size().y
 		sprite.offset.y = ((((1.0 - heightGrass) * h)))
@@ -131,12 +132,13 @@ func _physics_process(delta)->void:
 		timerDelta = 0.0
 
 		var per = 0
-		if weakref(interact_object).get_ref():
-			# calculates the collision percentage
-			var percent = interactiveArea
-			var s = self.global_position.distance_to(interact_object.global_position)
-			per = 1.0 - clamp(s * 100.0 / percent, 0, 100.0) / 100.0
-		
+		if interact_object!=null:
+			if weakref(interact_object).get_ref():
+				# calculates the collision percentage
+				var percent = interactiveArea
+				var s = self.global_position.distance_to(interact_object.global_position)
+				per = 1.0 - clamp(s * 100.0 / percent, 0, 100.0) / 100.0
+			
 		# rotates the leaf according to the object that collided
 		rotation = lerp(rotation, clamp(per, 0, deg2rad(maxRotate)) * direction, speed)
 		

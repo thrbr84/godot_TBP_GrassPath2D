@@ -1,19 +1,19 @@
 [gd_scene load_steps=15 format=2]
 
-[ext_resource path="res://assets/font/ui.ttf" type="DynamicFontData" id=1]
-[ext_resource path="res://scenes/player.tscn" type="PackedScene" id=2]
-[ext_resource path="res://scripts/main.gd" type="Script" id=3]
+[ext_resource path="res://scripts/main.gd" type="Script" id=1]
+[ext_resource path="res://assets/grass_bkg.png" type="Texture" id=2]
+[ext_resource path="res://scenes/player.tscn" type="PackedScene" id=3]
 [ext_resource path="res://icon.png" type="Texture" id=4]
-[ext_resource path="res://assets/ball.png" type="Texture" id=5]
-[ext_resource path="res://assets/grass_bkg.png" type="Texture" id=7]
-[ext_resource path="res://addons/TBP_GrassPath2D/TBP_GrassPath2D.gd" type="Script" id=15]
-[ext_resource path="res://addons/analog_controller/analog.gd" type="Script" id=17]
-[ext_resource path="res://addons/analog_controller/big_circle_DIRECTION_2_H.png" type="Texture" id=18]
-[ext_resource path="res://addons/analog_controller/small_circle_DIRECTION_4.png" type="Texture" id=19]
+[ext_resource path="res://assets/font/ui.ttf" type="DynamicFontData" id=5]
+[ext_resource path="res://addons/analog_controller/analog.gd" type="Script" id=6]
+[ext_resource path="res://addons/analog_controller/big_circle_DIRECTION_2_H.png" type="Texture" id=7]
+[ext_resource path="res://addons/analog_controller/small_circle_DIRECTION_4.png" type="Texture" id=8]
+[ext_resource path="res://assets/ball.png" type="Texture" id=9]
+[ext_resource path="res://addons/TBP_GrassPath2D/TBP_GrassPath2D.gd" type="Script" id=10]
 
 [sub_resource type="DynamicFont" id=1]
 size = 30
-font_data = ExtResource( 1 )
+font_data = ExtResource( 5 )
 
 [sub_resource type="PhysicsMaterial" id=2]
 bounce = 0.5
@@ -27,17 +27,17 @@ _data = {
 }
 
 [node name="main" type="Node2D"]
-script = ExtResource( 3 )
+script = ExtResource( 1 )
 
 [node name="grass_bkg" type="Sprite" parent="."]
 visible = false
 position = Vector2( 621.327, 606.183 )
 scale = Vector2( 0.406832, 0.406832 )
-texture = ExtResource( 7 )
+texture = ExtResource( 2 )
 
 [node name="player" parent="." groups=[
 "interact_grass",
-] instance=ExtResource( 2 )]
+] instance=ExtResource( 3 )]
 position = Vector2( 640, 360 )
 
 [node name="UI" type="CanvasLayer" parent="."]
@@ -69,11 +69,11 @@ __meta__ = {
 }
 
 [node name="AnalogController" type="Node2D" parent="UI"]
-script = ExtResource( 17 )
+script = ExtResource( 6 )
 isDynamicallyShowing = true
 typeAnalogic = 0
-bigBallTexture = ExtResource( 18 )
-smallBallTexture = ExtResource( 19 )
+bigBallTexture = ExtResource( 7 )
+smallBallTexture = ExtResource( 8 )
 
 [node name="ball1" type="RigidBody2D" parent="." groups=[
 "ball",
@@ -83,7 +83,7 @@ physics_material_override = SubResource( 2 )
 gravity_scale = 10.0
 
 [node name="icon" type="Sprite" parent="ball1"]
-texture = ExtResource( 5 )
+texture = ExtResource( 9 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ball1"]
 shape = SubResource( 3 )
@@ -97,7 +97,7 @@ gravity_scale = 10.0
 sleeping = true
 
 [node name="icon" type="Sprite" parent="ball2"]
-texture = ExtResource( 5 )
+texture = ExtResource( 9 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ball2"]
 shape = SubResource( 3 )
@@ -105,7 +105,7 @@ shape = SubResource( 3 )
 [node name="TBP_GrassPath2D" type="Path2D" parent="."]
 position = Vector2( 0, -169.528 )
 curve = SubResource( 4 )
-script = ExtResource( 15 )
+script = ExtResource( 10 )
 groupInteractive = [ "interact_grass", "ball" ]
 [connection signal="analogChange" from="UI/AnalogController" to="player" method="_on_AnalogController_analogChange"]
 [connection signal="analogPressed" from="UI/AnalogController" to="player" method="_on_AnalogController_analogPressed"]
