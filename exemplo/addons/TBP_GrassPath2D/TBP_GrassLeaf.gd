@@ -1,5 +1,7 @@
 extends Node2D
 
+const TIMER_LIMIT = .02
+
 export(bool) var interactive = false
 export(float) var windForce = 0
 export(float) var windDirection = 0
@@ -13,8 +15,6 @@ export(ShaderMaterial) var leafMaterial
 export(Vector2) var randomGrass = Vector2.ZERO
 export(Array) var groupInteractive:Array = ["interact_grass"]
 
-const TIMER_LIMIT = .02
-
 var timerDelta:float = 0.0
 var direction:float = 1
 var dirWind:float = 1
@@ -22,23 +22,13 @@ var rotWindMin:float = 0
 var rotWindMax:float = 0
 var interact_object
 var speed:float = 0.08
-var texture:Texture
+var texture: Texture
 var windTime = 0
 var timer
 var flag = 'MIN'
 var rnd = RandomNumberGenerator.new()
 
-# setget to change heighGrass
-func _setHeightGrass(newHeight):
-	heightGrass = newHeight
-
-	var sprite = $Control/Sprite
-	if sprite==null:return
-	if weakref(sprite).get_ref():
-		var h = sprite.texture.get_size().y
-		sprite.offset.y = ((((1.0 - heightGrass) * h)))
-
-func _ready()->void:
+func _ready() -> void:
 	# Add the leaf to group
 	add_to_group("TBP_GrassLeaf")
 	
@@ -59,13 +49,13 @@ func _ready()->void:
 	g.rect_min_size = s
 	g.rect_size = s
 	g.rect_position.x = -s.x / 2
-	g.rect_position.y = -s.y+grassYOffset
+	g.rect_position.y = -s.y + grassYOffset
 	g.rect_pivot_offset.x = s.x / 2
-	g.rect_pivot_offset.y = s.y+grassYOffset
+	g.rect_pivot_offset.y = s.y + grassYOffset
 	g.rect_clip_content = true
 	
 	# adjust the heighGrass
-	sprite.offset.y = ((((1.0 - heightGrass) * h)))
+	sprite.offset.y = (1.0 - heightGrass) * h
 	
 	# settings the wind rotations and wind direction
 	_configure(g)
@@ -83,9 +73,9 @@ func _ready()->void:
 		
 		# setting the shape and collision
 		cshape.extents.x = interactiveArea
-		cshape.extents.y = (heightGrass) * h - grassYOffset
+		cshape.extents.y = (heightGrass * h) - grassYOffset
 		collision.shape = cshape
-		collision.position.y = -((heightGrass) * h - grassYOffset)
+		collision.position.y = -(heightGrass * h) - grassYOffset
 		collision.rotation = followAngle
 		call_deferred("add_child", area)
 		area.call_deferred("add_child", collision)
@@ -107,7 +97,26 @@ func _ready()->void:
 		timer.one_shot = false
 		timer.connect("timeout", self, "_on_timer_wind")
 		add_child(timer)
+
+func _physics_process(delta) -> void:
+	if !interactive: return
 	
+	# limite the physics process to increase fps
+	timerDelta += delta
+	if timerDelta > TIMER_LIMIT:
+		timerDelta = 0.0
+
+		var per = 0
+		if interact_object != null:
+			if weakref(interact_object).get_ref():
+				# calculates the collision percentage
+				var percent = interactiveArea
+				var s = self.global_position.distance_to(interact_object.global_position)
+				per = 1.0 - clamp(s * 100.0 / percent, 0, 100.0) / 100.0
+			
+		# rotates the leaf according to the object that collided
+		rotation = lerp(rotation, clamp(per, 0, deg2rad(maxRotate)) * direction, speed)
+
 func _configure(control)->void:
 	# settings the wind rotations and wind direction
 	rotWindMin = rnd.randf_range(deg2rad(maxRotate) * randomGrass.x, deg2rad(maxRotate) * randomGrass.y)
@@ -118,31 +127,12 @@ func _configure(control)->void:
 	if windForce > 0:
 		rotWindMin *= windDirection
 		rotWindMax *= windDirection
-		control.rect_rotation = (rad2deg(abs(rotWindMax-rotWindMin)) * (windForce)) - 0
+		control.rect_rotation = (rad2deg(abs(rotWindMax - rotWindMin)) * (windForce)) - 0
 		
 	if windForce != 0:
 		windTime = control.rect_rotation
-	
-func _physics_process(delta)->void:
-	if !interactive: return
-	
-	# limite the physics process to increase fps
-	timerDelta += delta
-	if timerDelta > TIMER_LIMIT:
-		timerDelta = 0.0
 
-		var per = 0
-		if interact_object!=null:
-			if weakref(interact_object).get_ref():
-				# calculates the collision percentage
-				var percent = interactiveArea
-				var s = self.global_position.distance_to(interact_object.global_position)
-				per = 1.0 - clamp(s * 100.0 / percent, 0, 100.0) / 100.0
-			
-		# rotates the leaf according to the object that collided
-		rotation = lerp(rotation, clamp(per, 0, deg2rad(maxRotate)) * direction, speed)
-		
-func _on_area_body_entered(body)->void:
+func _on_area_body_entered(body) -> void:
 	# if the collided object is in the group
 	if _checkGroup(body) and interactive:
 		interact_object = body
@@ -153,17 +143,17 @@ func _on_area_body_entered(body)->void:
 			get_parent().grassProcess += 1
 			set_physics_process(true)
 
-func _on_area_body_exited(body)->void:
+func _on_area_body_exited(body) -> void:
 	if _checkGroup(body):
 		interact_object = null
 		
-		yield(get_tree().create_timer(.2),"timeout")
+		yield(get_tree().create_timer(.2), "timeout")
 		set_physics_process(false)
 			
 		if get_parent().grassProcess > 0:
 			get_parent().grassProcess -= 1
 
-func _on_timer_wind()->void:
+func _on_timer_wind() -> void:
 	# moves the leafs according to the wind
 	var minn = (rad2deg(abs(rotWindMax-rotWindMin)) * (windForce)) - 0
 	var total = rad2deg(abs(rotWindMax-rotWindMin))
@@ -180,10 +170,20 @@ func _on_timer_wind()->void:
 
 	$Control.rect_rotation = lerp($Control.rect_rotation, windTime * windDirection, .1 * windForce) 
 
-func _checkGroup(body)->bool:
-	# validates the group and if the object has global_position
+# validates the group and if the object has global_position
+func _checkGroup(body) -> bool:
 	for g in groupInteractive:
 		if body.is_in_group(g) and body.get("global_position") != null:
 			return true
 			break
 	return false
+
+# setget to change heighGrass
+func _setHeightGrass(newHeight) -> void:
+	heightGrass = newHeight
+
+	var sprite = $Control/Sprite
+	if sprite == null: return
+	if weakref(sprite).get_ref():
+		var h = sprite.texture.get_size().y
+		sprite.offset.y = ((1.0 - heightGrass) * h)

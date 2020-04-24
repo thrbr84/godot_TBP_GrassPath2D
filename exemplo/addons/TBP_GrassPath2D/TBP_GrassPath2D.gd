@@ -2,18 +2,17 @@ tool
 extends Path2D
 
 # EXPORTS
-export(Array, Color) var colorGrass:Array = [
+export(Array, Color) var colorGrass: Array = [
 	Color(.1, .25, .02, 1),
 	Color(.09, .18, .05, 1),
 	Color(.12, .29, .03, 1),
 	Color(.24, .31, .08, 1),
 	Color(.34, .46, .09, 1),
-	]
-	
-export(int) var blur_samples:int = 8 # blur sample
-export(float, 0, 1) var blur_strength:float = 0 # blur strenght
+]
 
-export(Color) var colorTerrain:Color = Color(0.07, 0.03, 0, 1) # terrain color
+export(int) var blur_samples: int = 8 # blur sample
+export(float, 0, 1) var blur_strength: float = 0 # blur strenght
+export(Color) var colorTerrain: Color = Color(0.07, 0.03, 0, 1) # terrain color
 export(bool) var generateTerrain = true # generate static terrain with collision?
 export(float) var maxHeightTerrain = 500 # generate static terrain with collision?
 
@@ -39,7 +38,7 @@ export(float, -1, 1) var windDirection = .6 setget _setWindDirection # wind dire
 export(float) var grassZIndex = 0
 export(float) var grassYOffset = 20
 export(float, 0, 90) var maxLeafRotateDegree = 45.0
-export(Array, Texture) var grassTextures:Array = [
+export(Array, Texture) var grassTextures: Array = [
 	preload("res://addons/TBP_GrassPath2D/assets/grass0.png"),
 	preload("res://addons/TBP_GrassPath2D/assets/grass1.png"),
 	preload("res://addons/TBP_GrassPath2D/assets/grass2.png"),
@@ -63,7 +62,7 @@ export(Array, Texture) var grassTextures:Array = [
 ]
 
 # group to collide
-export(Array, String) var groupInteractive:Array = [
+export(Array, String) var groupInteractive: Array = [
 	"interact_grass"
 ]
 
@@ -72,28 +71,28 @@ var grassProcess = 0
 var grassLoaded = []
 var rnd = RandomNumberGenerator.new()
 
-func _setWindDirection(newDirection)->void:
+func _setWindDirection(newDirection) -> void:
 	windDirection = newDirection
 	
 	if !Engine.editor_hint:
 		for g in grassLoaded:
 			g.windDirection = windDirection
 			
-func _setWindForce(newForce)->void:
+func _setWindForce(newForce) -> void:
 	windForce = newForce
 	
 	if !Engine.editor_hint:
 		for g in grassLoaded:
 			g.windForce = windForce
 
-func _setHeightGrass(newHeight)->void:
+func _setHeightGrass(newHeight) -> void:
 	heightGrass = newHeight
 	
 	if !Engine.editor_hint:
 		for g in grassLoaded:
 			g.heightGrass = heightGrass
 
-func _ready()->void:
+func _ready() -> void:
 	if curve.get_baked_points().size() <= 0:
 		var screenSize = get_viewport_rect().size
 		curve.add_point(Vector2.ZERO + Vector2(0,screenSize.y - 50))
@@ -109,7 +108,7 @@ func _ready()->void:
 	if generateTerrain:
 		_generateTerrain()
 
-func _generateGrass()->void:
+func _generateGrass() -> void:
 	if Engine.editor_hint: return
 	if grassTextures.size() <= 0: return # if no textures selected
 	
@@ -123,8 +122,9 @@ func _generateGrass()->void:
 	# load the noise texture to blur shader
 	var img = Image.new()
 	img.load("res://addons/TBP_GrassPath2D/noise.png")
+	
 	var tx = ImageTexture.new()
-	tx.create_from_image(img,0)
+	tx.create_from_image(img, 0)
 
 	# load the blur shader
 	var smat = ShaderMaterial.new()
@@ -141,7 +141,7 @@ func _generateGrass()->void:
 		
 		var ang = 0
 		if followAngle:
-			if idx < (total -1 ):
+			if idx < ( total - 1 ):
 				# obtains the angle between the points of the curve
 				var current_point = curve.get_baked_points()[idx]
 				var next_point = curve.get_baked_points()[idx + 1]
@@ -173,9 +173,9 @@ func _generateGrass()->void:
 		grassLoaded.append(grass)
 		call_deferred("add_child", grass)
 
-func _generateTerrain()->void:
+func _generateTerrain() -> void:
 	if Engine.editor_hint: return
-	var arr:PoolVector2Array = []
+	var arr: PoolVector2Array = []
 	var f = null
 	var l = null
 	
