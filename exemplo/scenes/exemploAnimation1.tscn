@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://addons/TBP_GrassPath2D/TBP_GrassPath2D.gd" type="Script" id=1]
 [ext_resource path="res://addons/TBP_GrassPath2D/assets/grass0.png" type="Texture" id=2]
@@ -10,7 +10,6 @@
 [ext_resource path="res://addons/TBP_GrassPath2D/assets/grass13.png" type="Texture" id=8]
 [ext_resource path="res://addons/TBP_GrassPath2D/assets/grass14.png" type="Texture" id=9]
 [ext_resource path="res://addons/TBP_GrassPath2D/assets/grass15.png" type="Texture" id=10]
-[ext_resource path="res://addons/TBP_GrassPath2D/assets/grass16.png" type="Texture" id=11]
 [ext_resource path="res://addons/TBP_GrassPath2D/assets/grass17.png" type="Texture" id=12]
 [ext_resource path="res://addons/TBP_GrassPath2D/assets/grass18.png" type="Texture" id=13]
 [ext_resource path="res://addons/TBP_GrassPath2D/assets/grass19.png" type="Texture" id=14]
@@ -69,11 +68,9 @@ tracks/1/keys = {
 [node name="ExemploAnimation1" type="Node2D"]
 
 [node name="TBP_GrassPath2DBackground" type="Path2D" parent="."]
-visible = false
 curve = SubResource( 1 )
 script = ExtResource( 1 )
-colorGrass = [  ]
-blur_strength = 0.549
+blur_strength = 0.703
 colorTerrain = Color( 0, 0, 0, 1 )
 interval = 3.0
 interactive = false
@@ -83,13 +80,11 @@ windForce = 0.803
 windDirection = 1.0
 grassYOffset = 0.0
 maxLeafRotateDegree = 90.0
-grassTextures = [ ExtResource( 2 ) ]
 
 [node name="TBP_GrassPath2D" type="Path2D" parent="."]
 position = Vector2( 0, -64 )
 curve = SubResource( 1 )
 script = ExtResource( 1 )
-colorGrass = [  ]
 blur_strength = 0.081
 colorTerrain = Color( 0, 0, 0, 1 )
 interval = 3.0
@@ -98,9 +93,9 @@ randomGrassMin = -0.945
 randomGrassMax = 1.0
 windForce = 0.803
 windDirection = 1.0
-grassYOffset = 30.0
+grassYOffset = 10.0
 maxLeafRotateDegree = 90.0
-grassTextures = [ ExtResource( 3 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 8 ), ExtResource( 9 ), ExtResource( 10 ), ExtResource( 11 ), ExtResource( 12 ), ExtResource( 13 ), ExtResource( 14 ), ExtResource( 2 ) ]
+grassTextures = [ ExtResource( 3 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 8 ), ExtResource( 9 ), ExtResource( 10 ), ExtResource( 12 ), ExtResource( 13 ), ExtResource( 14 ), ExtResource( 2 ) ]
 
 [node name="heighGrass" type="AnimationPlayer" parent="."]
 anims/start = SubResource( 2 )
