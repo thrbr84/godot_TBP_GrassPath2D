@@ -182,6 +182,7 @@ func _checkGroup(body) -> bool:
 func _setHeightGrass(newHeight) -> void:
 	heightGrass = newHeight
 
+	if Engine.editor_hint: return
 	var sprite = $Control/Sprite
 	if sprite == null: return
 	if weakref(sprite).get_ref():
