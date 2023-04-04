@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=35 format=2]
 
 [ext_resource path="res://scripts/main.gd" type="Script" id=1]
 [ext_resource path="res://assets/grass_bkg.png" type="Texture" id=2]
@@ -10,6 +10,26 @@
 [ext_resource path="res://addons/analog_controller/small_circle_DIRECTION_4.png" type="Texture" id=8]
 [ext_resource path="res://assets/ball.png" type="Texture" id=9]
 [ext_resource path="res://addons/TBP_GrassPath2D/TBP_GrassPath2D.gd" type="Script" id=10]
+[ext_resource path="res://addons/TBP_GrassPath2D/assets/grass17.png" type="Texture" id=11]
+[ext_resource path="res://addons/TBP_GrassPath2D/assets/grass18.png" type="Texture" id=12]
+[ext_resource path="res://addons/TBP_GrassPath2D/assets/grass13.png" type="Texture" id=13]
+[ext_resource path="res://addons/TBP_GrassPath2D/assets/grass19.png" type="Texture" id=14]
+[ext_resource path="res://addons/TBP_GrassPath2D/assets/grass16.png" type="Texture" id=15]
+[ext_resource path="res://addons/TBP_GrassPath2D/assets/grass14.png" type="Texture" id=16]
+[ext_resource path="res://addons/TBP_GrassPath2D/assets/grass15.png" type="Texture" id=17]
+[ext_resource path="res://addons/TBP_GrassPath2D/assets/grass2.png" type="Texture" id=18]
+[ext_resource path="res://addons/TBP_GrassPath2D/assets/grass1.png" type="Texture" id=19]
+[ext_resource path="res://addons/TBP_GrassPath2D/assets/grass3.png" type="Texture" id=20]
+[ext_resource path="res://addons/TBP_GrassPath2D/assets/grass4.png" type="Texture" id=21]
+[ext_resource path="res://addons/TBP_GrassPath2D/assets/grass5.png" type="Texture" id=22]
+[ext_resource path="res://addons/TBP_GrassPath2D/assets/grass0.png" type="Texture" id=23]
+[ext_resource path="res://addons/TBP_GrassPath2D/assets/grass10.png" type="Texture" id=24]
+[ext_resource path="res://addons/TBP_GrassPath2D/assets/grass11.png" type="Texture" id=25]
+[ext_resource path="res://addons/TBP_GrassPath2D/assets/grass9.png" type="Texture" id=26]
+[ext_resource path="res://addons/TBP_GrassPath2D/assets/grass12.png" type="Texture" id=27]
+[ext_resource path="res://addons/TBP_GrassPath2D/assets/grass6.png" type="Texture" id=28]
+[ext_resource path="res://addons/TBP_GrassPath2D/assets/grass7.png" type="Texture" id=29]
+[ext_resource path="res://addons/TBP_GrassPath2D/assets/grass8.png" type="Texture" id=30]
 
 [sub_resource type="DynamicFont" id=1]
 size = 30
@@ -106,6 +126,26 @@ shape = SubResource( 3 )
 position = Vector2( 0, -169.528 )
 curve = SubResource( 4 )
 script = ExtResource( 10 )
+colorGrass = [ Color( 0.1, 0.25, 0.02, 1 ), Color( 0.09, 0.18, 0.05, 1 ), Color( 0.12, 0.29, 0.03, 1 ), Color( 0.24, 0.31, 0.08, 1 ), Color( 0.34, 0.46, 0.09, 1 ) ]
+blur_samples = 8
+blur_strength = 0.0
+colorTerrain = Color( 0.07, 0.03, 0, 1 )
+generateTerrain = true
+maxHeightTerrain = 500.0
+interval = 15.0
+interactive = true
+maxProcess = 20
+interactiveArea = 100.0
+followAngle = true
+heightGrass = 1.0
+randomGrassMin = -0.3
+randomGrassMax = 0.3
+windForce = 0.3
+windDirection = 0.6
+grassZIndex = 0.0
+grassYOffset = 20.0
+maxLeafRotateDegree = 45.0
+grassTextures = [ ExtResource( 23 ), ExtResource( 19 ), ExtResource( 18 ), ExtResource( 20 ), ExtResource( 21 ), ExtResource( 22 ), ExtResource( 28 ), ExtResource( 29 ), ExtResource( 30 ), ExtResource( 26 ), ExtResource( 24 ), ExtResource( 25 ), ExtResource( 27 ), ExtResource( 13 ), ExtResource( 16 ), ExtResource( 17 ), ExtResource( 15 ), ExtResource( 11 ), ExtResource( 12 ), ExtResource( 14 ) ]
 groupInteractive = [ "interact_grass", "ball" ]
 [connection signal="analogChange" from="UI/AnalogController" to="player" method="_on_AnalogController_analogChange"]
 [connection signal="analogPressed" from="UI/AnalogController" to="player" method="_on_AnalogController_analogPressed"]
