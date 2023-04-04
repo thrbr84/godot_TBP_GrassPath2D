@@ -54,7 +54,7 @@ For better performance, increase the value of "interval", which is the interval 
 ----------
 
 ##### Configure the Addon
-- Download the file [addons/TBP_GrassPath2D.zip](addons/TBP_GrassPath2D.zip)
+- Download the folder [addons/TBP_GrassPath2D](addons/TBP_GrassPath2D)
 - Put it in your project's "addons" folder
 - Go to Project Settings > Plugin and enable the "TBP_GrassPath2D" plugin
 
@@ -71,5 +71,5 @@ You can use an AnimationPlayer or GDScript to change some parameters at run time
 ----------
 
 ### ...
-Will you use this code commercially? Rest assured you can use it freely and without having to mention anything, of course I will be happy if you at least remember the help and share it with friends, lol. If you feel at heart, consider buying me a coffee heart -> https://ko-fi.com/thiagobruno
+Will you use this code commercially? Rest assured you can use it freely and without having to mention anything, of course I will be happy if you at least remember the help and share it with friends, lol. If you feel at heart, consider buying me a coffee heart -> https://ko-fi.com/thsbruno
 
